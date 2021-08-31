@@ -15,7 +15,7 @@ const todoSlice = createSlice({
       state.todos.push(newTodo);
     },
     deleteTodo: (state, action) => {
-      return state.todos.filter((todo) => todo.id !== action.payload.id);
+      state.todos = state.todos.filter((todo) => todo.id !== action.payload.id);
     },
     updateTodo: (state, action) => {
       const index = state.todos.findIndex(

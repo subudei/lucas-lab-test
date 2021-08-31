@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from "react";
-
-import Navbar from "../Navbar/Navbar";
 import { useDispatch } from "react-redux";
-import UnsplashGallery from "../UnspashGallery/UnsplashGallery";
-import UnsplashForm from "../UnspalshForm/UnsplashForm";
 
-function Page2() {
+function UnsplashForm() {
   const dispatch = useDispatch();
   const [query, setQuery] = useState("");
   const [imgData, setImgData] = useState([]);
+
+  let id = "bp3L3WcUFnWVScrQkQwPbpIPwmO4STUtXNHycSaF05Q";
 
   const handleSearchPhotos = (e) => {
     e.preventDefault();
@@ -35,14 +33,12 @@ function Page2() {
   };
 
   useEffect(() => {
-    getingData();
+    console.log(process.env);
+    // getingData();
   }, []);
 
   return (
-    <div className="page__2__container">
-      <Navbar />
-      <h2>Page 2 (Unspalsh Gallery)</h2>
-      <UnsplashForm />
+    <div>
       <form onSubmit={handleSearchPhotos}>
         <input
           type="text"
@@ -52,9 +48,8 @@ function Page2() {
         />
         <button type="submit">Search Photos</button>
       </form>
-      <UnsplashGallery data={imgData} />
     </div>
   );
 }
 
-export default Page2;
+export default UnsplashForm;
