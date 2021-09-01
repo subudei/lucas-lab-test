@@ -11,7 +11,6 @@ function App() {
   return (
     <Router>
       <div className="App">
-        react test
         <Switch>
           <Route exact path="/" component={Login} />
           <Route path="/page1" component={Page1} />

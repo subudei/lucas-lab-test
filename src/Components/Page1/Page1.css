@@ -1,9 +1,12 @@
-.page2__container {
+.page1__container {
   display: flex;
   min-height: 100vh;
 }
-
 .page__div {
   margin: auto;
   margin-top: 15px;
+}
+.grid__div {
+  height: 400px;
+  width: 1005px;
 }

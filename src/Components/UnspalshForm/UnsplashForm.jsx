@@ -1,41 +1,40 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
+import { gettingData } from "../../redux/gallerySlice";
 
-function UnsplashForm() {
+const UnsplashForm = () => {
   const dispatch = useDispatch();
+  const [input, setInput] = useState("");
   const [query, setQuery] = useState("");
-  const [imgData, setImgData] = useState([]);
+  const [data, setData] = useState({});
 
-  let id = "bp3L3WcUFnWVScrQkQwPbpIPwmO4STUtXNHycSaF05Q";
-
-  const handleSearchPhotos = (e) => {
-    e.preventDefault();
-    console.log(query);
-    dispatch(() => {});
-    setQuery("");
+  const handleInput = (e) => {
+    setInput(e.target.value);
   };
-  const handleSearchQuery = (e) => {
-    setQuery(e.target.value);
-  };
-
-  const getingData = async () => {
+  const fetchData = async (query) => {
     try {
       const response = await fetch(
-        `https://api.unsplash.com/search/photos/?client_id=${process.env.REACT_APP_UNSPLASH_KEY}&query=cars`
+        `https://api.unsplash.com/search/photos/?client_id=${process.env.REACT_APP_UNSPLASH_KEY}&query=${query}`
       );
       const data = await response.json();
+      setData(data.results);
       console.log(data);
-      setImgData(await data.results);
-      console.log(imgData[0].id);
-    } catch (err) {
-      console.log("eroor message :", err);
+    } catch (error) {
+      console.log("Error :", error);
     }
+  };
+  const handleSearchPhotos = (e) => {
+    e.preventDefault();
+    setQuery(input);
+    // fetchData(query);
+    dispatch(gettingData({ imgData: data }));
+    console.log(query);
+    setInput("");
   };
 
   useEffect(() => {
-    console.log(process.env);
-    // getingData();
-  }, []);
+    fetchData(query);
+  }, [query]);
 
   return (
     <div>
@@ -43,13 +42,13 @@ function UnsplashForm() {
         <input
           type="text"
           placeholder="Enter a therm"
-          value={query}
-          onChange={handleSearchQuery}
+          value={input}
+          onChange={handleInput}
         />
         <button type="submit">Search Photos</button>
       </form>
     </div>
   );
-}
+};
 
 export default UnsplashForm;

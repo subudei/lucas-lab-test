@@ -1,13 +1,19 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = {};
+const initialState = {
+  imgData: [],
+};
 
 const gallerySlice = createSlice({
   name: "gallery",
   initialState,
-  reducers: {},
+  reducers: {
+    gettingData: (state, action) => {
+      state.imgData = action.payload;
+    },
+  },
 });
 
-export const {} = gallerySlice.actions;
+export const { gettingData } = gallerySlice.actions;
 
 export default gallerySlice.reducer;

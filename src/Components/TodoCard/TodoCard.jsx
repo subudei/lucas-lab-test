@@ -8,7 +8,7 @@ import CardActions from "@material-ui/core/CardActions";
 import { useDispatch } from "react-redux";
 import { updateTodo, deleteTodo } from "../../redux/todoSlice";
 
-function TodoCard({ id, title }) {
+const TodoCard = ({ id, title }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [currentTodo, setCurrentTodo] = useState(title);
   const dispatch = useDispatch();
@@ -57,6 +57,6 @@ function TodoCard({ id, title }) {
       </Card>
     </>
   );
-}
+};
 
 export default TodoCard;

@@ -3,7 +3,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import TodoCard from "../TodoCard/TodoCard";
 
-function TodoList() {
+const TodoList = () => {
   const todos = useSelector((state) => state.todos.todos);
 
   return (
@@ -16,6 +16,6 @@ function TodoList() {
       </ul>
     </div>
   );
-}
+};
 
 export default TodoList;

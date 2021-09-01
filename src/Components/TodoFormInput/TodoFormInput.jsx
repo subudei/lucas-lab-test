@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { addTodo } from "../../redux/todoSlice";
 
-function TodoFormInput() {
+const TodoFormInput = () => {
   const [title, setTitle] = useState("");
   const dispatch = useDispatch();
 
@@ -33,6 +33,6 @@ function TodoFormInput() {
       </form>
     </div>
   );
-}
+};
 
 export default TodoFormInput;

@@ -1,9 +1,12 @@
 import React from "react";
-import UnsplashImgCard from "../UnspalshImgCard/UnsplashImgCard";
 import "./UnspalshGallery.css";
 
-function UnsplashGallery({ data }) {
-  const gallery = data;
+import { useSelector } from "react-redux";
+
+import UnsplashImgCard from "../UnspalshImgCard/UnsplashImgCard";
+
+const UnsplashGallery = () => {
+  const gallery = useSelector((state) => state.gallery.imgData.imgData);
   console.log("gallery :", gallery);
   return (
     <div className="gallery__container">
@@ -18,12 +21,8 @@ function UnsplashGallery({ data }) {
             />
           );
         })}
-      {/* <UnsplashImgCard />
-      <UnsplashImgCard />
-      <UnsplashImgCard />
-      <UnsplashImgCard /> */}
     </div>
   );
-}
+};
 
 export default UnsplashGallery;

@@ -1,8 +1,8 @@
-.page2__container {
-  display: flex;
+.page3__container {
   min-height: 100vh;
+  display: flex;
+  /* flex-direction: column; */
 }
-
 .page__div {
   margin: auto;
   margin-top: 15px;
