@@ -2,53 +2,37 @@ import React, { useState, useEffect } from "react";
 import "./Page1.css";
 
 import Navbar from "../Navbar/Navbar";
-// import { DataGrid } from "@material-ui/data-grid";
-import { DataGrid } from "@mui/x-data-grid";
+import MaterialTable from "material-table";
 
 const Page1 = () => {
-  const [rows, setRows] = useState([]);
+  const [data, setData] = useState([]);
 
   const getUsers = async () => {
     const response = await fetch(`https://jsonplaceholder.typicode.com/posts`);
-    const data = await response.json();
-    console.log(data);
-    setRows(data);
+    const db = await response.json();
+    setData(db);
   };
   useEffect(() => {
     getUsers();
   }, []);
 
   const columns = [
-    { field: "title", headerName: "Title", width: 300, editable: true },
+    {
+      field: "title",
+      title: "Title",
+      filtering: false,
+    },
     {
       field: "body",
-      headerName: "Body",
-      width: 300,
-      editable: true,
+      title: "Body",
+      filtering: false,
     },
     {
       field: "userId",
-      headerName: "UID",
-      width: 150,
+      title: "UID",
+      filterPlaceholder: "Filter by ID",
+      align: "center",
     },
-    {
-      field: "action",
-      headerName: "Action",
-      type: "form",
-      width: 250,
-      editable: true,
-    },
-    // {
-    //   field: 'fullName',
-    //   headerName: 'Full name',
-    //   description: 'This column has a value getter and is not sortable.',
-    //   sortable: false,
-    //   width: 160,
-    //   valueGetter: (params) =>
-    //     `${params.getValue(params.id, 'firstName') || ''} ${
-    //       params.getValue(params.id, 'lastName') || ''
-    //     }`,
-    // },
   ];
   return (
     <div className="page1__container">
@@ -56,12 +40,43 @@ const Page1 = () => {
       <div className="page__div">
         <h2>Page 1 (Data Table)</h2>
         <div className="grid__div">
-          <DataGrid
-            rows={rows}
+          <MaterialTable
+            title="Lucas Lab Table"
             columns={columns}
-            pageSize={5}
-            // checkboxSelection
-            // disableSelectionOnClick
+            data={data}
+            editable={{
+              onRowAdd: (newRow) =>
+                new Promise((resolve, reject) => {
+                  setData([...data, newRow]);
+                  resolve();
+                }),
+              onRowUpdate: (newRow, oldRow) =>
+                new Promise((resolve, reject) => {
+                  const updatedData = [...data];
+                  updatedData[oldRow.tableData.id] = newRow;
+                  setData(updatedData);
+                  resolve();
+                }),
+              onRowDelete: (selectedRow) =>
+                new Promise((resolve, reject) => {
+                  const updatedData = [...data];
+                  updatedData.splice(selectedRow.tableData.id, 1);
+                  setData(updatedData);
+                  resolve();
+                }),
+            }}
+            options={{
+              search: true,
+              searchAutoFocus: true,
+              searchFieldAlignment: "left",
+              filtering: true,
+              addRowPosition: "first",
+              actionsColumnIndex: -1,
+              paginationPosition: "top",
+              showFirstLastPageButtons: false,
+              // rowStyle: { backgroundColor: "rgb(241, 241, 241)" },
+              // headerStyle: { backgroundColor: "rgb(241, 241, 241)" },
+            }}
           />
         </div>
       </div>

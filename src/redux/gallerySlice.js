@@ -9,7 +9,7 @@ const gallerySlice = createSlice({
   initialState,
   reducers: {
     gettingData: (state, action) => {
-      state.imgData = action.payload;
+      state.imgData = action.payload.imgData;
     },
   },
 });

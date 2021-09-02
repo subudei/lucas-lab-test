@@ -1,13 +1,12 @@
 import React from "react";
+import { useSelector } from "react-redux";
+import UnsplashImgCard from "../UnspalshImgCard/UnsplashImgCard";
 import "./UnspalshGallery.css";
 
-import { useSelector } from "react-redux";
 
-import UnsplashImgCard from "../UnspalshImgCard/UnsplashImgCard";
 
 const UnsplashGallery = () => {
-  const gallery = useSelector((state) => state.gallery.imgData.imgData);
-  console.log("gallery :", gallery);
+  const gallery = useSelector((state) => state.gallery.imgData);
   return (
     <div className="gallery__container">
       {gallery &&

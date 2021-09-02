@@ -1,51 +1,46 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { gettingData } from "../../redux/gallerySlice";
 
 const UnsplashForm = () => {
   const dispatch = useDispatch();
   const [input, setInput] = useState("");
-  const [query, setQuery] = useState("");
-  const [data, setData] = useState({});
+  const [data, setData] = useState();
 
   const handleInput = (e) => {
     setInput(e.target.value);
   };
-  const fetchData = async (query) => {
+  const fetchData = async (input) => {
     try {
       const response = await fetch(
-        `https://api.unsplash.com/search/photos/?client_id=${process.env.REACT_APP_UNSPLASH_KEY}&query=${query}`
+        `https://api.unsplash.com/search/photos/?client_id=${process.env.REACT_APP_UNSPLASH_KEY}&query=${input}`
       );
       const data = await response.json();
       setData(data.results);
-      console.log(data);
     } catch (error) {
       console.log("Error :", error);
     }
   };
-  const handleSearchPhotos = (e) => {
+  const handleSearchPhotos = async (e) => {
     e.preventDefault();
-    setQuery(input);
-    // fetchData(query);
-    dispatch(gettingData({ imgData: data }));
-    console.log(query);
+    await fetchData(input);
     setInput("");
   };
 
   useEffect(() => {
-    fetchData(query);
-  }, [query]);
+    if (data) dispatch(gettingData({ imgData: data }));
+  }, [data, dispatch]);
 
   return (
     <div>
       <form onSubmit={handleSearchPhotos}>
         <input
           type="text"
-          placeholder="Enter a therm"
+          placeholder="Search photos"
           value={input}
           onChange={handleInput}
         />
-        <button type="submit">Search Photos</button>
+        <button type="submit">Search</button>
       </form>
     </div>
   );
